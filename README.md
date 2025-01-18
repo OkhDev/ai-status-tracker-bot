@@ -14,94 +14,123 @@
 
 </div>
 
-A Discord bot that monitors and displays the operational status of OpenAI and Anthropic services in real-time.
+## 🚀 Quick Start
 
-## Features ✨
+Want to add this bot to your Discord server? Click the button below to get started:
 
-- 🔄 Real-time status monitoring of OpenAI and Anthropic services
-- 📊 Single, auto-updating embedded message
-- 🔵 Color-coded status indicators
-- 🔗 Quick access buttons to status pages
-- ⏱️ Auto-updates every 5 minutes
-- 🔄 Auto-recreates message if deleted
+<div align="center">
+  <a href="https://discord.com/oauth2/authorize?client_id=1329897514207416360&permissions=355392&integration_type=0&scope=bot+applications.commands">
+    <img src="https://img.shields.io/badge/Add%20to%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Add AI Status Tracker to Discord" width="200"/>
+  </a>
+</div>
 
-## Preview 👀
+## Features
 
-The bot maintains a single embedded message that looks like this:
+- 🔄 Real-time status monitoring for OpenAI and Anthropic services
+- 🎯 Single message that updates in place - no spam
+- 🌐 Direct links to official status pages
+- 🎨 Visual status indicators with color-coded states
+- ⚡ Quick-access help guide for understanding status indicators
+- 🔒 Admin-only commands for security
 
-```
-AI Services Status Monitor
-------------------------
-OpenAI Status:    [Operational]
-Anthropic Status: [Operational]
+## Status Indicators
 
-[OpenAI Status Page] [Anthropic Status Page]
-Last updated: <timestamp>
-```
+- ✅ **Operational**: All systems working normally
+- 🔸 **Limited**: Some services experiencing limitations
+- ❌ **Issues/Failed**: Problems detected or status check failed
 
-## Setup 🚀
+Bot's presence also indicates overall status:
+- 🟢 Online: All services operational
+- 🟡 Idle: Some services limited
+- 🔴 DND: Services have issues
 
-### Prerequisites
+## Commands
 
-- Python 3.8 or higher
-- Discord Bot Token
-- Discord Server with channel access
+All commands require administrator permissions:
 
-### Installation
+### `/create [interval]`
+Creates a status tracker in the current channel
+- Optional `interval`: Update frequency in minutes (default: 5)
+- One tracker per channel
 
-1. Clone the repository:
+### `/refresh`
+Force an immediate status update for all trackers
+
+### `/interval <minutes>`
+Change how often the tracker updates
+- Minimum: 1 minute
+- Affects the current channel only
+
+### `/delete`
+Removes the tracker from the current channel
+
+### `/list`
+Lists all active status trackers and their settings
+- Shows server name, channel, refresh interval, and message ID for each tracker
+- Displays the default refresh interval
+
+### `/debug`
+Get comprehensive debug information
+- Bot status (status, latency, uptime)
+- Configuration details
+- Service status
+- Channel details
+- System information
+- Last update times
+
+### `/default <minutes>`
+Set the default refresh interval for new trackers
+- Minimum: 1 minute
+- Only affects newly created trackers
+- Existing trackers maintain their intervals
+
+### `/sync`
+Force sync all trackers and verify their status
+- Verifies and updates all existing trackers
+- Recreates missing messages
+- Removes invalid channels
+- Provides detailed sync results
+
+## Setup
+
+1. Clone the repository
+
+2. (Optional) Create and activate a virtual environment:
 ```bash
-git clone https://github.com/yourusername/ai-status-tracker-bot.git
-cd ai-status-tracker-bot
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
 ```
 
-2. Create and activate virtual environment:
-```bash
-python3 -m venv venv
-source venv/bin/activate  # On Windows, use: venv\Scripts\activate
+3. Create a `.env` file with your Discord bot token and client ID:
+```
+DISCORD_TOKEN=your_token_here
+CLIENT_ID=your_client_id_here
 ```
 
-3. Install dependencies:
+4. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Set up environment variables:
-```bash
-cp .env.example .env
-```
-Then edit `.env` and add your Discord bot token.
-
-### Configuration ⚙️
-
-1. Create a Discord bot in the [Discord Developer Portal](https://discord.com/developers/applications)
-2. Enable necessary bot permissions:
-   - Read Messages/View Channels
-   - Send Messages
-   - Embed Links
-   - Use External Emojis
-3. Update the `CHANNEL_ID` in `status_bot.py` with your target channel ID
-
-### Running the Bot 🏃‍♂️
-
+5. Run the bot:
 ```bash
 python status_bot.py
 ```
 
-## How it Works 🔧
+## 🤝 Contributing
 
-The bot:
-1. Connects to Discord using your bot token
-2. Creates an embedded message in the specified channel
-3. Checks OpenAI and Anthropic status pages every 5 minutes
-4. Updates the embedded message with current status
-5. Automatically recreates the message if deleted
-6. Uses color coding to indicate overall status (blue for all operational, red if issues detected)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Contributing 🤝
-
-Feel free to open issues or submit pull requests if you have suggestions for improvements!
-
-## License 📄
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 

@@ -25,3 +25,6 @@ build/
 # OS specific files
 .DS_Store
 Thumbs.db 
+
+# Config files
+config.json 
