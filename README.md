@@ -48,48 +48,16 @@ Bot's presence also indicates overall status:
 
 All commands require administrator permissions:
 
-### `/create [interval]`
-Creates a status tracker in the current channel
-- Optional `interval`: Update frequency in minutes (default: 5)
-- One tracker per channel
-
-### `/refresh`
-Force an immediate status update for all trackers
-
-### `/interval <minutes>`
-Change how often the tracker updates
-- Minimum: 1 minute
-- Affects the current channel only
-
-### `/delete`
-Removes the tracker from the current channel
-
-### `/list`
-Lists all active status trackers and their settings
-- Shows server name, channel, refresh interval, and message ID for each tracker
-- Displays the default refresh interval
-
-### `/debug`
-Get comprehensive debug information
-- Bot status (status, latency, uptime)
-- Configuration details
-- Service status
-- Channel details
-- System information
-- Last update times
-
-### `/default <minutes>`
-Set the default refresh interval for new trackers
-- Minimum: 1 minute
-- Only affects newly created trackers
-- Existing trackers maintain their intervals
-
-### `/sync`
-Force sync all trackers and verify their status
-- Verifies and updates all existing trackers
-- Recreates missing messages
-- Removes invalid channels
-- Provides detailed sync results
+| Command | Description | Parameters |
+|---------|-------------|------------|
+| `/create` | Creates a status tracker in the current channel | `[interval]`: Update frequency in minutes (default: 5) |
+| `/refresh` | Force an immediate status update for all trackers | None |
+| `/interval` | Change how often the tracker updates | `<minutes>`: New update frequency (min: 1) |
+| `/delete` | Removes the tracker from the current channel | None |
+| `/list` | Lists all active status trackers and their settings | None |
+| `/debug` | Get comprehensive debug information including bot status, configuration, service status, and system details | None |
+| `/default` | Set the default refresh interval for new trackers | `<minutes>`: New default interval (min: 1) |
+| `/sync` | Force sync all trackers and verify their status | None |
 
 ## Setup
 
