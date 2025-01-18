@@ -632,23 +632,68 @@ async def update_all_channels() -> None:
     # Check services status
     openai_status, anthropic_status = await check_status()
     
-    # Only update bot status if service status has changed
+    # Track channels per server
+    servers_with_trackers = {}
+    for channel_id_str in config['channels'].keys():
+        try:
+            # Validate channel ID format
+            try:
+                channel_id = int(channel_id_str)
+            except ValueError:
+                logging.error(f"Invalid channel ID format in config: {channel_id_str}")
+                continue
+
+            # First try to get the channel from cache
+            channel = bot.get_channel(channel_id)
+            
+            # If not in cache, try to fetch it with proper error handling
+            if not channel:
+                try:
+                    channel = await bot.fetch_channel(channel_id)
+                except discord.Forbidden:
+                    logging.warning(f"Bot lacks permission to access channel {channel_id}")
+                    continue
+                except discord.NotFound:
+                    logging.warning(f"Channel {channel_id} not found")
+                    continue
+                except discord.HTTPException as e:
+                    logging.error(f"HTTP error fetching channel {channel_id}: {e}")
+                    continue
+            
+            # Verify bot has required permissions in the channel
+            if channel and channel.guild:
+                permissions = channel.permissions_for(channel.guild.me)
+                if not (permissions.view_channel and permissions.send_messages and permissions.embed_links):
+                    logging.warning(f"Bot lacks required permissions in channel {channel_id}")
+                    continue
+                    
+                # Add to server tracking if all checks pass
+                if channel.guild.id not in servers_with_trackers:
+                    servers_with_trackers[channel.guild.id] = set()
+                servers_with_trackers[channel.guild.id].add(channel_id)
+                
+        except Exception as e:
+            logging.error(f"Error processing channel {channel_id_str}: {e}")
+            continue
+    
+    # Only update bot status if service status has changed AND we have servers with single channels
     if await tracker.should_update_bot_status(openai_status, anthropic_status):
-        # Update bot status based on services status while maintaining the watching activity
-        if all(status == 'Operational' for status in [openai_status, anthropic_status]):
+        # Only change presence if we have any tracked channels
+        should_change_presence = bool(servers_with_trackers)
+        
+        if should_change_presence:
+            # Determine status based on service health
+            if all(status == 'Operational' for status in [openai_status, anthropic_status]):
+                new_status = discord.Status.online
+            elif any(status == 'Limited' for status in [openai_status, anthropic_status]):
+                new_status = discord.Status.idle
+            else:  # Issues Detected or Status Check Failed
+                new_status = discord.Status.dnd
+            
+            # Update presence with appropriate status while maintaining activity
             await bot.change_presence(
                 activity=discord.Activity(type=discord.ActivityType.watching, name="AI Status"),
-                status=discord.Status.online
-            )
-        elif any(status == 'Limited' for status in [openai_status, anthropic_status]):
-            await bot.change_presence(
-                activity=discord.Activity(type=discord.ActivityType.watching, name="AI Status"),
-                status=discord.Status.idle
-            )
-        else:  # Issues Detected or Status Check Failed
-            await bot.change_presence(
-                activity=discord.Activity(type=discord.ActivityType.watching, name="AI Status"),
-                status=discord.Status.dnd
+                status=new_status
             )
     
     # First pass: identify invalid channels

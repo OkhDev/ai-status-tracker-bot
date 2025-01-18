@@ -39,10 +39,10 @@ Want to add this bot to your Discord server? Click the button below to get start
 - 🔸 **Limited**: Some services experiencing limitations
 - ❌ **Issues/Failed**: Problems detected or status check failed
 
-Bot's presence also indicates overall status:
+Bot's presence reflects overall service status:
 - 🟢 Online: All services operational
-- 🟡 Idle: Some services limited
-- 🔴 DND: Services have issues
+- 🟡 Idle: Some services experiencing limitations
+- 🔴 DND: Services have issues or status checks failed
 
 ## Commands
 
