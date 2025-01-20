@@ -14,8 +14,7 @@
 
 </div>
 
-## 🚀 Quick Start
-
+<!-- ## 🚀 Quick Start
 Want to add this bot to your Discord server? Click the button below to get started:
 
 <div align="center">
@@ -23,6 +22,7 @@ Want to add this bot to your Discord server? Click the button below to get start
     <img src="https://img.shields.io/badge/Add%20to%20Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Add AI Status Tracker to Discord" width="200"/>
   </a>
 </div>
+-->
 
 ## Features
 
@@ -102,3 +102,22 @@ python status_bot.py
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+
+## 📋 Future PotentialIdeas
+
+- [ ] Add support for more AI service providers (e.g., Cohere, Mistral AI)
+- [ ] Implement custom status page monitoring for any URL
+- [ ] Add webhook integration for instant status notifications
+- [ ] Create a web dashboard for managing multiple bot instances
+- [ ] Add detailed status history and analytics
+- [ ] Implement status alerts via DM for server admins
+- [ ] Add custom status message templates
+- [ ] Support for role-based access control beyond admin-only
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [OkhDev](https://github.com/OkhDev)**
+
+</div>
